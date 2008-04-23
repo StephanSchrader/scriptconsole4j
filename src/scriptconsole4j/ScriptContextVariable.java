@@ -39,6 +39,12 @@ public class ScriptContextVariable {
 	 *            An informative text describing the variable
 	 */
 	public ScriptContextVariable(Object var, String name, String description) {
+		if (var == null) {
+			throw new RuntimeException("The variable must not be null");
+		}
+		if (name == null || name.trim().equals("")) {
+			throw new RuntimeException("The variable name is mandatory");
+		}
 		this.var = var;
 		this.name = name;
 		this.description = description;
