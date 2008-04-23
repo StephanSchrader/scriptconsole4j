@@ -1,0 +1,104 @@
+<html>
+<head><title>Scriptconsole4j Tutorial v 0.1</title></head>
+<body style="font-family:Arial,Helvetica;font-size:smallr">
+<h1>Scriptconsole4j Tutorial</h1>
+
+This is a brief explanation of how to use the scriptconsole4j.
+<p>
+Currently there are two ways to use it:
+<br>
+<ol>
+<li>
+As a stand alone application (not very useful in a real scenario unless you want to practice some scripting language)
+</li>
+<li>
+Embedding it in your application
+</li>
+</ol>
+
+Actually, the first option embeds the scripting console in a JFrame. That’s it. 
+<br>
+If you see the source code of the scriptconsole4j.example.Main you’ll get the idea of how to embed the visual console in your application.
+<br>
+Next we detail the two ways to use it. The examples must be executed with Java 6.
+<br>First, make sure you've downloaded the scriptconsole4j-0.1.jar since it would be necessary in both examples
+
+
+<h3>Running the stand alone version</h3>
+<ul>
+<li>Execute the jar file: <code>java -jar scriptconsole4j-0.1.jar</code>
+</li>
+<li>It will display a frame with a text area where you can enter your script.
+</li>
+<li>The only available scripting engine should be Mozilla Rhino (JavaScript).
+</li>
+<li>The lower text area is the standard output that is available to your script code through the "output" variable.
+</li>
+<li>Enter the following script and press the Run button:
+<pre><code>
+output.println("Hello");
+</code></pre>
+
+You can also try some more "complex" JavaScript:
+<pre><code>
+for (var i=0; i<10; i++) {
+  output.println("Hello " + 1);
+}
+//Rhino allows you to use java classes as well
+java.lang.System.out.println("Hello again");
+</code></pre>
+</li>
+</ul>
+<h3>Embedding the script console in your own application</h3>
+If you want to have the same console inside your application it is easy. 
+You can also take some objects from you application and pass them as parameters to the
+scripting console. You can, for example, have access to your system's façade and perform method
+calls on it through the scripting window.
+<p>
+Obviously this is the type of think that is not useful for a production environment, but
+it helps me a lot in the development and debugging.
+<p>
+Consider the next example and suppose your application has a JPanel called myApplicationPanel.
+<pre><code>
+...
+ScriptContextVariable myObjectVar = new ScriptContextVariable(new MyObject(),"myobj","");
+ScriptContextVariable myFacadeVar = new ScriptContextVariable(mySystemFacade,"facade","The system's façade");
+ScriptingPanel panel = new ScriptingPanel(myObjectVar,myFacadeVar);
+myApplicationPanel.add(panel);
+...
+</code></pre>
+You add this code on the construction of your object myApplicationPanel.<br>
+An instance of the scripting panel will be displayed inside myApplicationPanel. <br>
+This custom created scripting console, in addition to the previously seen "output" variable, will have access to other two variables which come from your application: "myobj" and "facade".
+<br>
+Now, supposing that your façade has a method called getLoggedUsersCount, it will be possible to execute a script like the following during runtime:
+<pre><code>
+output.println("Total users: " + facade.getLoggedUsersCount());
+</code></pre>
+This is just an example, but you could execute any other method calls on your facade or the other objects available in your scripting context. 
+You would just have to respect the syntax of the scripting language of your choice.
+<h3>Tired of JavaScript? Want to use groovy, beanshell or other scripting engine?</h3>
+There is a <a href="http://scripting.java.net">scripting project</a> that provides JSR 223 compliant engines for several scripting languages.
+<br>
+<ul>
+<li>
+Download the zip with the available engines
+</li>
+<li>Uncompress it in a directory which we'll call %ENGINES_HOME%. Each engine will be available in the bin folder of the corresponding language.
+</li>
+<li>Choose the engine for the language of you preference. Let's say you prefer groovy
+</li>
+<li>Now you need to <a href="http://groovy.codehaus.org/Download">download</a> the actual implementation of groovy into %ENGINES_HOME%/groovy/lib. The above engine is just an adaptor for the scripting language to be used in a standard way.
+</li>
+<li>
+Execute the application: 
+<code>java -Djava.ext.dirs=%ENGINES_HOME%/groovy/lib;%ENGINES_HOME%/groovy/bin scriptconsole4j-0.1.jar</code>
+</li>
+<li>The script language combo box should now show Mozilla Rhino and Groovy as well
+</li>
+</ul>
+
+<p>
+In case of questions feel free to send an email to kiev.gama at gmail.com
+</body>
+</html>
