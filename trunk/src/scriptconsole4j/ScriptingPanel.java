@@ -21,6 +21,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Vector;
@@ -96,6 +97,10 @@ public class ScriptingPanel extends JPanel {
 	public ScriptingPanel() {
 		this(Collections.EMPTY_LIST);
 	}
+	
+	public ScriptingPanel(ScriptContextVariable ... variables) {
+		this(Arrays.asList(variables));
+	}
 
 	public ScriptingPanel(List<ScriptContextVariable> variables) {
 		initBindings(variables);
@@ -103,10 +108,10 @@ public class ScriptingPanel extends JPanel {
 		this.printVariables();
 	}
 
-	private void initBindings(Object ctx) {
+	private void initBindings(List<ScriptContextVariable> paramVars) {
 		this.variables = new ArrayList<ScriptContextVariable>();
 		this.bindings = new SimpleBindings();
-		this.variables.addAll(variables);
+		this.variables.addAll(paramVars);
 		this.variables.add(outputVariable);
 		for (ScriptContextVariable variable : variables) {
 			this.bindings.put(variable.getName(), variable.getVar());
@@ -123,7 +128,13 @@ public class ScriptingPanel extends JPanel {
 		for (ScriptContextVariable variable : variables) {
 			this.jTaResult.append(variable.getName());
 			this.jTaResult.append(" - ");
-			this.jTaResult.append(variable.getDescription());
+			String descr = variable.getDescription();
+			if (descr == null || descr.trim().equals("")) {
+				this.jTaResult.append("class ");
+				this.jTaResult.append(variable.getVar().getClass().getName());
+			} else {
+				this.jTaResult.append(descr);
+			}
 			this.jTaResult.append("\n");
 		}
 	}
