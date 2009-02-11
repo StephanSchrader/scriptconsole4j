@@ -5,7 +5,7 @@
   <packaging>bundle</packaging>
   <name>scriptconsole4j OSGi Bundle</name>
   <artifactId>scriptconsole4j-osgi</artifactId>
-  <version>1.0.0</version>
+  <version>0.2</version>
   <dependencies>
     <dependency>
       <groupId>org.apache.felix</groupId>
