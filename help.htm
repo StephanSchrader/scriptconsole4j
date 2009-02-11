@@ -1,15 +1,21 @@
 <html>
-<head><title>Scriptconsole4j Tutorial v 0.1</title></head>
+<head><title>Scriptconsole4j Tutorial v 0.2</title></head>
 <body style="font-family:Arial,Helvetica;font-size:smallr">
 <h1>Scriptconsole4j Tutorial</h1>
 
 This is a brief explanation of how to use the scriptconsole4j.
 <p>
-Currently there are two ways to use it:
+Pre-requisites:<br>
+<ul><li>Java 6</li></ul>
+<p>
+Currently there are three ways to use it:
 <br>
 <ol>
 <li>
 As a stand alone application (not very useful in a real scenario unless you want to practice some scripting language)
+</li>
+<li>
+As an OSGi bundle, giving you access to the OSGi framework via a BundleContext object
 </li>
 <li>
 Embedding it in your application
@@ -20,13 +26,13 @@ Actually, the first option embeds the scripting console in a JFrame. That’s it.
 <br>
 If you see the source code of the scriptconsole4j.example.Main you’ll get the idea of how to embed the visual console in your application.
 <br>
-Next we detail the two ways to use it. The examples must be executed with Java 6.
-<br>First, make sure you've downloaded the scriptconsole4j-0.1.jar since it would be necessary in both examples
+Next we detail the three ways to use it. The examples must be executed with Java 6. It may be possible to run them by installing a JSR-223 engine in a Java 5 distribution.
+<br>First, make sure you've downloaded the scriptconsole4j-0.2.jar since it would be necessary in the examples
 
 
 <h3>Running the stand alone version</h3>
 <ul>
-<li>Execute the jar file: <code>java -jar scriptconsole4j-0.1.jar</code>
+<li>Execute the jar file: <code>java -jar scriptconsole4j-0.2.jar</code>
 </li>
 <li>It will display a frame with a text area where you can enter your script.
 </li>
@@ -49,6 +55,25 @@ java.lang.System.out.println("Hello again");
 </code></pre>
 </li>
 </ul>
+
+
+<h3>Using scriptconsole4j as an OSGi bundle</h3>
+<ul>
+<li>Install the jar file in the OSGi framework of you preference. e.g.:<code>install file:/export/home/kiev/scriptconsole4j-0.2.jar</code>
+</li>
+<li>It will display a frame with a text area where you can enter your script, as in the standalone version.
+</li>
+<li>Enter the following script and press the Run button:
+<pre><code>
+var ref = ctx.getServiceReference("org.osgi.service.startlevel.StartLevel");
+var service = ctx.getService(ref);
+output.println(service.getStartLevel());
+</code></pre>
+</li>
+</ul>
+This illustrates the <i>adhoc</i> retrieval and usage of a service in OSGi by using the scripting console.
+You can use it as an "immediate console" for retrieving live information from services registered in OSGi, writing scripts for starting bundles, etc.
+
 <h3>Embedding the script console in your own application</h3>
 If you want to have the same console inside your application it is easy. 
 You can also take some objects from you application and pass them as parameters to the
@@ -92,7 +117,7 @@ Download the zip with the available engines
 </li>
 <li>
 Execute the application: 
-<code>java -Djava.ext.dirs=%ENGINES_HOME%/groovy/lib;%ENGINES_HOME%/groovy/bin scriptconsole4j-0.1.jar</code>
+<code>java -Djava.ext.dirs=%ENGINES_HOME%/groovy/lib;%ENGINES_HOME%/groovy/bin scriptconsole4j-0.2.jar</code>
 </li>
 <li>The script language combo box should now show Mozilla Rhino and Groovy as well
 </li>
