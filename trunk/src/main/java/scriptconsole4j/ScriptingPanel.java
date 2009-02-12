@@ -174,7 +174,15 @@ public class ScriptingPanel extends JPanel {
 		lowerPanel.add(jbtCancel);
 		this.jbtCancel.setEnabled(false);
 		this.jbtOk.setMnemonic('R');
+		jbtClear.setMnemonic('C');
+		jbtVariables.setMnemonic('V');
+		this.jbtOk.setMnemonic('R');
 		this.jbtCancel.setMnemonic('n');
+		this.jbtCancel.setToolTipText("Tries to cancel executing script");
+		jbtClear.setToolTipText("Clears output");
+		jbtVariables.setToolTipText("Prints available scripting context variables");
+		this.jbtOk.setToolTipText("Runs the script");
+		
 		this.jbtOk.addActionListener(scriptExecutorAction);
 		this.jbtCancel.addActionListener(scriptExecutorAction);
 		jbtClear.addActionListener(new ActionListener() {
