@@ -225,10 +225,12 @@ public class ScriptingPanel extends JPanel {
 		private ScriptEngine resolveEngine() {
 			ScriptEngine engine = null;
 			try {
+				//the engine will execute the script using the bundle's classloader for class resolving
+				Thread.currentThread().setContextClassLoader(this.getClass().getClassLoader());
+				
 				ScriptEngineFactory factory = ((ScriptEngineFactory) jCbLanguages
 						.getSelectedItem());
 				engine = factory.getScriptEngine();
-
 				engine.setBindings(bindings, ScriptContext.GLOBAL_SCOPE);
 			} catch (Throwable ex) {
 				JOptionPane.showMessageDialog(ScriptingPanel.this,
