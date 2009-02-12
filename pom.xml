@@ -47,7 +47,7 @@
             <Bundle-Name>Scriptconsole4j Bundle</Bundle-Name>
             <Bundle-Description>A simple scripting console that gives access to the OSGi bundle context</Bundle-Description>
             <Bundle-Vendor>Kiev Gama</Bundle-Vendor>
-            <Import-Package>org.osgi.*</Import-Package>
+            <Import-Package>!*</Import-Package>
             <Export-Package>scriptconsole4j,scriptconsole4j.activation</Export-Package>
             <Private-Package>scriptconsole4j.*</Private-Package>
             <DynamicImport-Package>*</DynamicImport-Package>
