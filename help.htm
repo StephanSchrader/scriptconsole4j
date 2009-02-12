@@ -72,7 +72,34 @@ output.println(service.getStartLevel());
 </li>
 </ul>
 This illustrates the <i>adhoc</i> retrieval and usage of a service in OSGi by using the scripting console.
-You can use it as an "immediate console" for retrieving live information from services registered in OSGi, writing scripts for starting bundles, etc.
+You can use it as an "immediate console" for retrieving live information from services registered in OSGi, writing scripts for starting bundles, etc. <br>
+<br>
+In the next example, we are able to code and add a BundleListener dynamically with JavaScript:
+<pre><code>
+    var o = new Object();
+    o.bundleChanged = function(e) { 
+        message = "An event happened to bundle " + e.getBundle().getBundleId();
+        output.println(message);
+        //Writing in the standard output
+        java.lang.System.out.println(message);
+    };
+	
+    ctx.addBundleListener(new org.osgi.framework.BundleListener(o));
+</code></pre>
+<br>
+You can also implement services and register them in the platform. The bundle uses DynamicImport-Package so it can dynamically resolve the implemented types:
+<pre><code>
+var o = new Object();
+o.sayHello = function() { java.lang.System.out.println("closed")};
+	
+r = new com.foo.HelloServerService(o);
+//registering the service in the OSGi Service Registry
+ctx.registerService("foo.BarService",r,null);
+//retrieving the service instance
+service = ctx.getService(ctx.getServiceReference("foo.BarService"));
+service.myMethod();
+	
+</code></pre>
 
 <h3>Embedding the script console in your own application</h3>
 If you want to have the same console inside your application it is easy. 
